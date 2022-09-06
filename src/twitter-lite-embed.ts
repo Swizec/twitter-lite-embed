@@ -56,6 +56,7 @@ export class TwitterLiteEmbed extends HTMLElement {
         shadowDom.innerHTML = `<style>${tweetCSS}</style>`;
 
         this.contentRef = document.createElement("div");
+
         if (children) {
             const previewDiv = document.createElement("div");
             previewDiv.className = "static-tweet-embed";
