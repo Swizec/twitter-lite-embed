@@ -19,24 +19,16 @@ export class TwitterLiteEmbed extends HTMLElement {
         return this.getAttribute("url") || "";
     }
 
-    get oembed(): string {
-        let oembed = this.getAttribute("oembed") || "";
-
-        if (oembed) {
-            oembed = decodeURIComponent(oembed)
-                .replace(/\?ref_src=twsrc.*?fw/g, "")
-                .replace(/<br>/g, "<br />")
-                .trim();
-        }
-
-        return oembed;
-    }
-
-    attributeChangedCallback(name: string, oldVal: unknown, newVal: unknown) {
+    async attributeChangedCallback(
+        name: string,
+        oldVal: unknown,
+        newVal: unknown
+    ) {
         switch (name) {
             case "url":
                 if (newVal !== oldVal) {
-                    this.fetchTweet();
+                    await this.fetchTweet();
+                    this.renderTweet();
                 }
                 break;
             default:
@@ -58,17 +50,20 @@ export class TwitterLiteEmbed extends HTMLElement {
     }
 
     private setupDom() {
+        const children = this.childNodes[0];
+
         const shadowDom = this.attachShadow({ mode: "open" });
         shadowDom.innerHTML = `<style>${tweetCSS}</style>`;
 
         this.contentRef = document.createElement("div");
-        shadowDom.append(this.contentRef);
-
-        if (this.oembed) {
-            this.contentRef.innerHTML += `${this.oembed}`;
-        } else {
-            this.contentRef.innerHTML += `<div class="preview">Loading <a href="${this.url}" target="_blank">${this.url}</a> ...</div>`;
+        if (children) {
+            const previewDiv = document.createElement("div");
+            previewDiv.className = "static-tweet-embed";
+            previewDiv.append(children);
+            this.contentRef.append(previewDiv);
         }
+
+        shadowDom.append(this.contentRef);
     }
 
     private renderTweet() {

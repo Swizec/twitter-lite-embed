@@ -1,22 +1,4 @@
 export const tweetCSS = `
-blockquote, div.preview {
-    display: flex;
-    flex-direction: column;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    max-width: 550px;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 1px solid rgb(196, 207, 214);
-    border-radius: 12px;
-    padding: 12px 16px;
-    background-color: rgb(255, 255, 255);
-
-    font-size: 20px;
-    color: rgb(15, 20, 25);
-    line-height: 24px;
-}
-
 div.static-tweet-embed {
     display: flex;
     flex-direction: column;
