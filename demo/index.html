@@ -21,13 +21,5 @@
     <p>Use Twitter's oEmbed API to fetch a tweet quote. Put <code>encodeURIComponent(response.html)</code> in the <code>oembed</code> attribute to render the full quote as a placeholder.</p>
 
     <twitter-lite url="https://twitter.com/Swizec/status/1566102217228439552" oembed="%3Cblockquote%20class%3D%22twitter-tweet%22%20data-dnt%3D%22true%22%3E%3Cp%20lang%3D%22en%22%20dir%3D%22ltr%22%3ESo%20here%26%2339%3Bs%20the%20plan%3A%3Cbr%3E%3Cbr%3EI%20have%20code%20that%20creates%20static%20tweet%20embeds.%20Privacy.%3Cbr%3E%3Cbr%3EBut%20Gatsby%20swamps%20my%20Twitter%20API%20limit%20because%20I%20have%20847%20tweets%20on%20%3Ca%20href%3D%22https%3A%2F%2Ft.co%2Fl8jxhUcttd%22%3Ehttps%3A%2F%2Ft.co%2Fl8jxhUcttd%3C%2Fa%3E%3Cbr%3E%3Cbr%3EA%20web%20component%20could%20show%20a%20static%20preview%20then%20load%20the%20full%20HTML%20from%20a%20Lambda%20when%20you%20scroll%20there%3C%2Fp%3E%26mdash%3B%20Swizec%20Teller%20writing%20a%20Manning%20book%20(%40Swizec)%20%3Ca%20href%3D%22https%3A%2F%2Ftwitter.com%2FSwizec%2Fstatus%2F1566102217228439552%3Fref_src%3Dtwsrc%255Etfw%22%3ESeptember%203%2C%202022%3C%2Fa%3E%3C%2Fblockquote%3E%0A"></twitter-lite>
-
-    <script>
-        (async function get() {
-            const res = await fetch('/api/fetch-tweet?url=https://twitter.com/Swizec/status/1566102217228439552')
-            const tweet = await res.json()
-            console.log(tweet)
-        })()
-    </script>
 </body>
 </html>

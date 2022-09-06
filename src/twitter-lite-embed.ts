@@ -32,8 +32,16 @@ export class TwitterLiteEmbed extends HTMLElement {
         return oembed;
     }
 
-    connectedCallback() {
-        this.fetchTweet();
+    attributeChangedCallback(name: string, oldVal: unknown, newVal: unknown) {
+        switch (name) {
+            case "url":
+                if (newVal !== oldVal) {
+                    this.fetchTweet();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private async fetchTweet() {
@@ -59,7 +67,7 @@ export class TwitterLiteEmbed extends HTMLElement {
         if (this.oembed) {
             this.contentRef.innerHTML += `${this.oembed}`;
         } else {
-            this.contentRef.innerHTML += `<p>Loading <a href="${this.url}" target="_blank">${this.url}</a> ...</p>`;
+            this.contentRef.innerHTML += `<div class="preview">Loading <a href="${this.url}" target="_blank">${this.url}</a> ...</div>`;
         }
     }
 
