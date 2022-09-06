@@ -1,4 +1,9 @@
+import { buildTweetHTML, Tweet } from "./tweet-builder";
+
 export class TwitterLiteEmbed extends HTMLElement {
+    shadowRoot!: ShadowRoot;
+    private tweet: Tweet | null = null;
+
     constructor() {
         super();
         this.setupDom();
@@ -29,6 +34,19 @@ export class TwitterLiteEmbed extends HTMLElement {
         this.fetchTweet();
     }
 
+    private async fetchTweet() {
+        if (!this.url) {
+            // no-op without a url
+            return;
+        }
+
+        const res = await fetch(`/api/fetch-tweet?url=${this.url}`);
+        const tweet = await res.json();
+
+        this.tweet = tweet as Tweet;
+        this.renderTweet();
+    }
+
     private setupDom() {
         const shadowDom = this.attachShadow({ mode: "open" });
 
@@ -39,15 +57,13 @@ export class TwitterLiteEmbed extends HTMLElement {
         }
     }
 
-    private async fetchTweet() {
-        if (!this.url) {
-            // no-op without a url
-            return;
-        }
+    private renderTweet() {
+        if (this.tweet) {
+            const div = document.createElement("div");
+            div.innerHTML = buildTweetHTML(this.tweet);
 
-        console.log(
-            `https://publish.twitter.com/oembed?url=${this.url}&dnt=true&omit_script=true`
-        );
+            this.shadowRoot.appendChild(div);
+        }
     }
 }
 
