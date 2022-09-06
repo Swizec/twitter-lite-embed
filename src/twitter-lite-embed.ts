@@ -1,8 +1,10 @@
 import { buildTweetHTML, Tweet } from "./tweet-builder";
+import { tweetCSS } from "./tweetCSS";
 
 export class TwitterLiteEmbed extends HTMLElement {
     shadowRoot!: ShadowRoot;
     private tweet: Tweet | null = null;
+    private contentRef!: HTMLDivElement;
 
     constructor() {
         super();
@@ -49,20 +51,21 @@ export class TwitterLiteEmbed extends HTMLElement {
 
     private setupDom() {
         const shadowDom = this.attachShadow({ mode: "open" });
+        shadowDom.innerHTML = `<style>${tweetCSS}</style>`;
+
+        this.contentRef = document.createElement("div");
+        shadowDom.append(this.contentRef);
 
         if (this.oembed) {
-            shadowDom.innerHTML = `${this.oembed}`;
+            this.contentRef.innerHTML += `${this.oembed}`;
         } else {
-            shadowDom.innerHTML = `<p>Loading <a href="${this.url}" target="_blank">${this.url}</a> ...</p>`;
+            this.contentRef.innerHTML += `<p>Loading <a href="${this.url}" target="_blank">${this.url}</a> ...</p>`;
         }
     }
 
     private renderTweet() {
         if (this.tweet) {
-            const div = document.createElement("div");
-            div.innerHTML = buildTweetHTML(this.tweet);
-
-            this.shadowRoot.appendChild(div);
+            this.contentRef.innerHTML = buildTweetHTML(this.tweet);
         }
     }
 }
