@@ -58,9 +58,9 @@ async function getTweet(url, twitterCredentials) {
 }
 
 /**
- *  request handling boilerplate
+ *  cloud function boilerplate
  */
-const server = http.createServer(async (request, response) => {
+async function cloudFunction(request, response) {
     const url = URL.parse(request.url, true);
 
     if (url.pathname === "/api/fetch-tweet" && url.query.url) {
@@ -84,6 +84,8 @@ const server = http.createServer(async (request, response) => {
         response.writeHead(404);
         response.end();
     }
-});
+}
+
+const server = http.createServer(cloudFunction);
 
 server.listen(9000);

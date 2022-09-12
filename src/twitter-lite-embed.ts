@@ -3,12 +3,15 @@ import { tweetCSS } from "./tweetCSS";
 
 export class TwitterLiteEmbed extends HTMLElement {
     shadowRoot!: ShadowRoot;
-    private tweet: Tweet | null = null;
+    private tweet?: Tweet;
     private contentRef!: HTMLDivElement;
+    private fetchingStatus: "canStart" | "fetching" | "fetched" | "error" =
+        "canStart";
 
     constructor() {
         super();
         this.setupDom();
+        this.hydrateTweet();
     }
 
     static get observedAttributes(): string[] {
@@ -19,16 +22,11 @@ export class TwitterLiteEmbed extends HTMLElement {
         return this.getAttribute("url") || "";
     }
 
-    async attributeChangedCallback(
-        name: string,
-        oldVal: unknown,
-        newVal: unknown
-    ) {
+    attributeChangedCallback(name: string, oldVal: unknown, newVal: unknown) {
         switch (name) {
             case "url":
                 if (newVal !== oldVal) {
-                    await this.fetchTweet();
-                    this.renderTweet();
+                    this.hydrateTweet();
                 }
                 break;
             default:
@@ -36,17 +34,32 @@ export class TwitterLiteEmbed extends HTMLElement {
         }
     }
 
+    private async hydrateTweet() {
+        this.tweet = await this.fetchTweet();
+
+        this.renderTweet();
+    }
+
     private async fetchTweet() {
-        if (!this.url) {
+        if (!this.url || this.fetchingStatus !== "canStart") {
             // no-op without a url
             return;
         }
+        this.fetchingStatus = "fetching";
+
+        console.log("fetching", this.url);
 
         const res = await fetch(`/api/fetch-tweet?url=${this.url}`);
-        const tweet = await res.json();
 
-        this.tweet = tweet as Tweet;
-        this.renderTweet();
+        if (res.ok) {
+            const tweet = await res.json();
+            this.fetchingStatus = "fetched";
+
+            return tweet as Tweet;
+        } else {
+            this.fetchingStatus = "error";
+            return undefined;
+        }
     }
 
     private setupDom() {
@@ -73,5 +86,3 @@ export class TwitterLiteEmbed extends HTMLElement {
         }
     }
 }
-
-customElements.define("twitter-lite", TwitterLiteEmbed);

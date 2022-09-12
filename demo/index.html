@@ -7,7 +7,8 @@
       content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"
     />
     <title>twitter-lite-embed demo</title>
-    <script type="module" src="../dist/twitter-lite-embed.js"></script>
+    
+    <script type="module" src="./demo.mjs"></script>
 </head>
 
 <body>
@@ -20,6 +21,7 @@
 
     <p>Use Twitter's oEmbed API to fetch a tweet quote. Put <code>encodeURIComponent(response.html)</code> in the <code>oembed</code> attribute to render the full quote as a placeholder.</p>
 
-    <twitter-lite url="https://twitter.com/Swizec/status/1566102217228439552"><blockquote class="twitter-tweet" data-dnt="true"><p lang="en" dir="ltr">So here&#39;s the plan:<br><br>I have code that creates static tweet embeds. Privacy.<br><br>But Gatsby swamps my Twitter API limit because I have 847 tweets on <a href="https://t.co/l8jxhUcttd">https://t.co/l8jxhUcttd</a><br><br>A web component could show a static preview then load the full HTML from a Lambda when you scroll there</p>&mdash; Swizec Teller writing a Manning book (@Swizec) <a href="https://twitter.com/Swizec/status/1566102217228439552?ref_src=twsrc%5Etfw">September 3, 2022</a></blockquote></twitter-lite>
+    <twitter-lite url="https://twitter.com/Swizec/status/1566102217228439552">
+        <blockquote class="twitter-tweet" data-dnt="true"><p lang="en" dir="ltr">So here&#39;s the plan:<br><br>I have code that creates static tweet embeds. Privacy.<br><br>But Gatsby swamps my Twitter API limit because I have 847 tweets on <a href="https://t.co/l8jxhUcttd">https://t.co/l8jxhUcttd</a><br><br>A web component could show a static preview then load the full HTML from a Lambda when you scroll there</p>&mdash; Swizec Teller writing a Manning book (@Swizec) <a href="https://twitter.com/Swizec/status/1566102217228439552?ref_src=twsrc%5Etfw">September 3, 2022</a></blockquote></twitter-lite>
 </body>
 </html>

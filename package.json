@@ -1,6 +1,6 @@
 {
     "name": "twitter-lite-embed",
-    "version": "1.0.0-0",
+    "version": "1.0.0-2",
     "description": "The fastest most privacy focused Twitter embed component.",
     "repository": "git@github.com:Swizec/twitter-lite-embed.git",
     "author": "Swizec Teller <swizec@swizec.com>",
