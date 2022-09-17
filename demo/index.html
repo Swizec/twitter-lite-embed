@@ -9,6 +9,153 @@
     <title>twitter-lite-embed demo</title>
     
     <script type="module" src="../dist/twitter-lite-embed.js"></script>
+
+    <style>
+        div.static-tweet-embed {
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 550px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgb(196, 207, 214);
+    border-radius: 12px;
+    padding: 12px 16px;
+    background-color: rgb(255, 255, 255);
+}
+div.static-tweet-embed:hover {
+    background-color: rgb(247, 249, 250);
+}
+
+div.static-tweet-embed blockquote {
+    margin: 0;
+    font-size: 20px;
+    padding: 0px;
+    border: 0px;
+    color: rgb(15, 20, 25);
+    line-height: 24px;
+}
+
+div.static-tweet-embed blockquote a {
+    color: rgb(22, 123, 185);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+div.static-tweet-embed blockquote a:hover {
+    color: rgb(27, 149, 224);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+div.static-tweet-embed .author {
+    color: rgb(91, 112, 131);
+    font-size: 15px;
+    line-height: 20px;
+    text-decoration: none;
+    padding-bottom: 12px;
+}
+
+div.static-tweet-embed .author b {
+    display: block;
+    font-weight: 700;
+    color: rgb(15, 20, 25);
+}
+
+div.static-tweet-embed .author b:hover {
+    text-decoration: underline;
+}
+
+div.static-tweet-embed .author img {
+    float: left;
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    margin-right: 4px;
+    margin-bottom: 0px;
+}
+
+div.static-tweet-embed .media {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    max-height: 366px;
+    margin-top: 12px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+div.static-tweet-embed .media img {
+    margin-bottom: 0px;
+}
+
+div.static-tweet-embed .time a {
+    color: rgb(91, 112, 131);
+    font-size: 15px;
+    line-height: 32px;
+    height: 32px;
+    text-decoration: none;
+}
+
+div.static-tweet-embed .time a:hover {
+    color: rgb(91, 112, 131);
+    font-size: 15px;
+    line-height: 32px;
+    height: 32px;
+    text-decoration: underline;
+}
+
+div.static-tweet-embed .stats {
+    display: flex;
+    align-items: center;
+    color: rgb(91, 112, 131);
+    font-size: 15px;
+}
+
+div.static-tweet-embed .stats svg {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+div.static-tweet-embed .stats svg path {
+    fill: rgb(91, 112, 131)
+}
+
+div.static-tweet-embed .stats svg:first-child {
+    padding-left: 0px;
+}
+
+div.static-tweet-embed .stats a {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    color: inherit;
+    text-decoration: none;
+}
+
+div.static-tweet-embed .stats a.like:hover  {
+    color: rgb(224, 36, 94);
+    text-decoration: underline;
+}
+
+div.static-tweet-embed .stats a.like:hover svg path {
+    fill: rgb(224, 36, 94);
+}
+
+div.static-tweet-embed .stats a.reply:hover  {
+    color: rgb(29, 161, 242);
+    text-decoration: underline;
+}
+
+div.static-tweet-embed .stats a.reply:hover svg path {
+    fill: rgb(29, 161, 242);
+}
+    </style>
 </head>
 
 <body>
@@ -19,9 +166,28 @@
 
     <h1>Using with a static site builder</h1>
 
-    <p>Use Twitter's oEmbed API to fetch a tweet quote. Put <code>encodeURIComponent(response.html)</code> in the <code>oembed</code> attribute to render the full quote as a placeholder.</p>
+    <p>Use your builder's machinery to render a preview into tweet-lite components.</p>
+    
+    <h2>oEmbed previews</h2>
+
+    <p>The oEmbed API gives you a blockquote that you can plop in. Should be used as a fallback to fetching the full tweet.</p>
 
     <twitter-lite url="https://twitter.com/Swizec/status/1566102217228439552">
-        <blockquote class="twitter-tweet" data-dnt="true"><p lang="en" dir="ltr">So here&#39;s the plan:<br><br>I have code that creates static tweet embeds. Privacy.<br><br>But Gatsby swamps my Twitter API limit because I have 847 tweets on <a href="https://t.co/l8jxhUcttd">https://t.co/l8jxhUcttd</a><br><br>A web component could show a static preview then load the full HTML from a Lambda when you scroll there</p>&mdash; Swizec Teller writing a Manning book (@Swizec) <a href="https://twitter.com/Swizec/status/1566102217228439552?ref_src=twsrc%5Etfw">September 3, 2022</a></blockquote></twitter-lite>
+        <blockquote class="twitter-tweet" data-dnt="true"><p lang="en" dir="ltr">So here&#39;s the plan:<br><br>I have code that creates static tweet embeds. Privacy.<br><br>But Gatsby swamps my Twitter API limit because I have 847 tweets on <a href="https://t.co/l8jxhUcttd">https://t.co/l8jxhUcttd</a><br><br>A web component could show a static preview then load the full HTML from a Lambda when you scroll there</p>&mdash; Swizec Teller writing a Manning book (@Swizec) <a href="https://twitter.com/Swizec/status/1566102217228439552?ref_src=twsrc%5Etfw">September 3, 2022</a></blockquote>
+    </twitter-lite>
+
+    <h2>Full pre-renders</h2>
+
+    <p>Fetching the full tweet, best done by a plugin for your platform, can render a full static preview. This should look same as the fully hydrated tweet.</p>
+
+    <twitter-lite url="https://twitter.com/chantastic/status/1246904982239993856">
+        <div class="static-tweet-embed css-0">
+            <a class="author css-s4hmgy" href="https://t.co/HVodqHIbGH"><img src="https://pbs.twimg.com/profile_images/1508534014457442304/w__SZnMm_normal.jpg" loading="lazy" alt="chantastic avatar" class="css-9whsf3"><b class="css-0">chantastic</b>@chantastic</a>
+            <blockquote class="css-1ni53ht">if one good thing came out of this whole COVID thing it's that even the old, white republican pundits seem to understand their demise is necessary to move America forward</blockquote>
+            
+            <div class="time css-0"><a href="https://twitter.com/chantastic/status/1246904982239993856" class="css-s4hmgy">1:58:08 PM – 4/5/2020</a></div>
+            <div class="stats css-0"><a href="https://twitter.com/intent/like?tweet_id=1246904982239993856" class="like css-s4hmgy"><svg viewBox="0 0 24 24" class="r-m0bqgq r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"><g><path d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12zM7.354 4.225c-2.08 0-3.903 1.988-3.903 4.255 0 5.74 7.034 11.596 8.55 11.658 1.518-.062 8.55-5.917 8.55-11.658 0-2.267-1.823-4.255-3.903-4.255-2.528 0-3.94 2.936-3.952 2.965-.23.562-1.156.562-1.387 0-.014-.03-1.425-2.965-3.954-2.965z"></path></g></svg>9</a> <a href="https://twitter.com/chantastic/status/1246904982239993856" class="reply css-s4hmgy"><svg viewBox="0 0 24 24" class="r-m0bqgq r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"><g><path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"></path></g></svg>1</a></div>
+        </div>
+    </twitter-lite>
 </body>
 </html>

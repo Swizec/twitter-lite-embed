@@ -10,9 +10,7 @@ export class TwitterLiteEmbed extends HTMLElement {
 
     constructor() {
         super();
-        console.log("constructing tweet");
         this.setupDom();
-        this.hydrateTweet();
     }
 
     static get observedAttributes(): string[] {
@@ -36,7 +34,6 @@ export class TwitterLiteEmbed extends HTMLElement {
     }
 
     private async hydrateTweet() {
-        console.log("hydrating tweet", this.url);
         this.tweet = await this.fetchTweet();
 
         this.renderTweet();
@@ -48,8 +45,6 @@ export class TwitterLiteEmbed extends HTMLElement {
             return;
         }
         this.fetchingStatus = "fetching";
-
-        console.log("fetching", this.url);
 
         const res = await fetch(`/api/fetch-tweet?url=${this.url}`);
 
@@ -65,17 +60,21 @@ export class TwitterLiteEmbed extends HTMLElement {
     }
 
     private setupDom() {
-        const children = this.childNodes[0];
+        const prerender = this.children[0];
 
         const shadowDom = this.attachShadow({ mode: "open" });
         shadowDom.innerHTML = `<style>${tweetCSS}</style>`;
 
         this.contentRef = document.createElement("div");
 
-        if (children) {
+        if (prerender) {
             const previewDiv = document.createElement("div");
-            previewDiv.className = "static-tweet-embed";
-            previewDiv.append(children);
+            if (!prerender.className.includes("static-tweet-embed")) {
+                previewDiv.className = "static-tweet-embed";
+            }
+
+            previewDiv.append(prerender);
+
             this.contentRef.append(previewDiv);
         }
 
@@ -83,7 +82,6 @@ export class TwitterLiteEmbed extends HTMLElement {
     }
 
     private renderTweet() {
-        console.log("trying to render tweet", this.tweet);
         if (this.tweet) {
             this.contentRef.innerHTML = buildTweetHTML(this.tweet);
         }
