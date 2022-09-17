@@ -10,6 +10,7 @@ export class TwitterLiteEmbed extends HTMLElement {
 
     constructor() {
         super();
+        console.log("constructing tweet");
         this.setupDom();
         this.hydrateTweet();
     }
@@ -35,6 +36,7 @@ export class TwitterLiteEmbed extends HTMLElement {
     }
 
     private async hydrateTweet() {
+        console.log("hydrating tweet", this.url);
         this.tweet = await this.fetchTweet();
 
         this.renderTweet();
@@ -81,8 +83,11 @@ export class TwitterLiteEmbed extends HTMLElement {
     }
 
     private renderTweet() {
+        console.log("trying to render tweet", this.tweet);
         if (this.tweet) {
             this.contentRef.innerHTML = buildTweetHTML(this.tweet);
         }
     }
 }
+
+customElements.define("twitter-lite", TwitterLiteEmbed);
